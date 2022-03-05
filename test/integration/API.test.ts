@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 describe('API', () => {
-  test('Deve testar a API /orders (POST)', async () => {
+  test.skip('Deve testar a API /orders (POST)', async () => {
     const response = await axios({
       url: 'http://localhost:3000/orders',
       method: 'post',
@@ -20,7 +20,7 @@ describe('API', () => {
     expect(order.total).toBe(138)
   })
 
-  test('Deve testar a API /simulateFreight (POST)', async () => {
+  test.skip('Deve testar a API /simulateFreight (POST)', async () => {
     const response = await axios({
       url: 'http://localhost:3000/simulateFreight',
       method: 'post',
