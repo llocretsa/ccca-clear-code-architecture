@@ -8,7 +8,7 @@ describe('Fazer Pedido', () => {
   let placeOrder: PlaceOrder
   let orderRepository: OrderRepositoryDatabase
   beforeEach(() => {
-    const connection = new PgPromiseConnectionAdapter()
+    const connection = PgPromiseConnectionAdapter.getInstance()
     const itemRepository = new ItemRepositoryDatabase(connection)
     orderRepository = new OrderRepositoryDatabase(connection)
     const couponRepository = new CouponRepositoryDatabase(connection)

@@ -4,8 +4,9 @@ import Connection from './Connection'
 
 export default class PgPromiseConnectionAdapter implements Connection {
   pgp: any
+  static instance: PgPromiseConnectionAdapter
 
-  constructor() {
+  private constructor() {
     const USER = String(process.env.DB_USER)
     const PASSWORD = String(process.env.DB_PASSWORD)
     const HOST = String(process.env.DB_HOST)
@@ -13,6 +14,13 @@ export default class PgPromiseConnectionAdapter implements Connection {
     const DATA_BASE = String(process.env.DB_DATA_BASE)
 
     this.pgp = pgp()(`postgres://${USER}:${PASSWORD}@${HOST}:${PORT}/${DATA_BASE}`)
+  }
+
+  static getInstance() {
+    if (!PgPromiseConnectionAdapter.instance) {
+      PgPromiseConnectionAdapter.instance = new PgPromiseConnectionAdapter()
+    }
+    return PgPromiseConnectionAdapter.instance
   }
 
   async query(statement: string, params: any[]): Promise<any> {
