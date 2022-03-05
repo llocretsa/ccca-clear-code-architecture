@@ -1,17 +1,22 @@
 import PlaceOrder from '../../src/application/useCase/PlaceOrder'
 import PgPromiseConnectionAdapter from '../../src/infra/database/PgPromiseConnectionAdapter'
+import CouponRepositoryDatabase from '../../src/infra/repository/database/CouponRepositoryDatabase'
 import ItemRepositoryDatabase from '../../src/infra/repository/database/ItemRepositoryDatabase'
-import CouponRepositoryMemory from '../../src/infra/repository/memory/CouponRepositoryMemory'
-import OrderRepositoryMemory from '../../src/infra/repository/memory/OrderRepositoryMemory'
+import OrderRepositoryDatabase from '../../src/infra/repository/database/OrderRepositoryDatabase'
 
 describe('Fazer Pedido', () => {
   let placeOrder: PlaceOrder
+  let orderRepository: OrderRepositoryDatabase
   beforeEach(() => {
     const connection = new PgPromiseConnectionAdapter()
     const itemRepository = new ItemRepositoryDatabase(connection)
-    const orderRepository = new OrderRepositoryMemory()
-    const couponRepository = new CouponRepositoryMemory()
+    orderRepository = new OrderRepositoryDatabase(connection)
+    const couponRepository = new CouponRepositoryDatabase(connection)
     placeOrder = new PlaceOrder(itemRepository, orderRepository, couponRepository)
+  })
+
+  afterEach(async () => {
+    await orderRepository.clear()
   })
 
   test('Deve fazer um pedido', async () => {
