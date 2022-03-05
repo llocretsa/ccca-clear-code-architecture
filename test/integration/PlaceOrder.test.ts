@@ -1,14 +1,20 @@
 import PlaceOrder from '../../src/application/useCase/PlaceOrder'
+import PgPromiseConnectionAdapter from '../../src/infra/database/PgPromiseConnectionAdapter'
+import ItemRepositoryDatabase from '../../src/infra/repository/database/ItemRepositoryDatabase'
 import CouponRepositoryMemory from '../../src/infra/repository/memory/CouponRepositoryMemory'
-import ItemRepositoryMemory from '../../src/infra/repository/memory/ItemRepositoryMemory'
 import OrderRepositoryMemory from '../../src/infra/repository/memory/OrderRepositoryMemory'
 
 describe('Fazer Pedido', () => {
-  test('Deve fazer um pedido', async () => {
-    const itemRepository = new ItemRepositoryMemory()
+  let placeOrder: PlaceOrder
+  beforeEach(() => {
+    const connection = new PgPromiseConnectionAdapter()
+    const itemRepository = new ItemRepositoryDatabase(connection)
     const orderRepository = new OrderRepositoryMemory()
     const couponRepository = new CouponRepositoryMemory()
-    const placeOrder = new PlaceOrder(itemRepository, orderRepository, couponRepository)
+    placeOrder = new PlaceOrder(itemRepository, orderRepository, couponRepository)
+  })
+
+  test('Deve fazer um pedido', async () => {
     const input = {
       cpf: '839.435.452-10',
       orderItems: [
@@ -20,14 +26,10 @@ describe('Fazer Pedido', () => {
       coupon: 'VALE20'
     }
     const output = await placeOrder.execute(input)
-    expect(output.total).toBe(88)
+    expect(output.total).toBe(138)
   })
 
   test('Deve fazer um pedido com calculo de frete', async () => {
-    const itemRepository = new ItemRepositoryMemory()
-    const orderRepository = new OrderRepositoryMemory()
-    const couponRepository = new CouponRepositoryMemory()
-    const placeOrder = new PlaceOrder(itemRepository, orderRepository, couponRepository)
     const input = {
       cpf: '839.435.452-10',
       orderItems: [
@@ -42,10 +44,6 @@ describe('Fazer Pedido', () => {
   })
 
   test('Deve fazer um pedido com código', async () => {
-    const itemRepository = new ItemRepositoryMemory()
-    const orderRepository = new OrderRepositoryMemory()
-    const couponRepository = new CouponRepositoryMemory()
-    const placeOrder = new PlaceOrder(itemRepository, orderRepository, couponRepository)
     const input = {
       cpf: '839.435.452-10',
       orderItems: [
