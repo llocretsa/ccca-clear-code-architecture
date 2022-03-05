@@ -10,15 +10,19 @@ export default class Order {
   private orderItems: OrderItem[]
   coupon: Coupon | undefined
   private freight: number
+  code: string
 
   constructor(
     cpf: string,
     readonly date: Date = new Date(),
-    readonly freightCalculator: FreightCalculator = new DefaultFreightCalculator()
+    readonly freightCalculator: FreightCalculator = new DefaultFreightCalculator(),
+    readonly sequence: number = 1
   ) {
     this.cpf = new Cpf(cpf)
     this.orderItems = []
     this.freight = 0
+    const year = date.getUTCFullYear()
+    this.code = `${year}${sequence.toString().padStart(8, '0')}`
   }
 
   addItem(item: Item, quantity: number) {
@@ -43,6 +47,7 @@ export default class Order {
     if (this.coupon) {
       total -= this.coupon.calculateDiscount(total, this.date)
     }
+    total += this.getFreight()
     return total
   }
 }
