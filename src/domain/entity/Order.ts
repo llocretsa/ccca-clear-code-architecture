@@ -11,7 +11,7 @@ export default class Order {
   private orderItems: OrderItem[]
   coupon: Coupon | undefined
   private freight: number
-  code: OrderCode
+  private code: OrderCode
 
   constructor(
     cpf: string,
@@ -37,6 +37,10 @@ export default class Order {
 
   getFreight() {
     return this.freight
+  }
+
+  getCode() {
+    return this.code.value
   }
 
   getTotal() {
