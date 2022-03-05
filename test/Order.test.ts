@@ -1,4 +1,6 @@
 import Coupon from '../src/Coupon'
+import DefaultFreightCalculator from '../src/DefaultFreightCalculator'
+import FixedFreightCalculator from '../src/FixedFreightCalculator'
 import Item from '../src/Item'
 import Order from '../src/Order'
 
@@ -47,9 +49,9 @@ describe('Criar Ordem de Compra', () => {
     expect(total).toBe(160)
   })
 
-  test('Deve criar um pedido com 3 itens com cálculo do frete', function () {
+  test('Deve criar um pedido com 3 itens com cálculo do frete com a estratégia default', function () {
     const cpf = '839.435.452-10'
-    const order = new Order(cpf)
+    const order = new Order(cpf, new Date(), new DefaultFreightCalculator())
     order.addItem(new Item(4, "Instrumentos Musicais", "Guitarra", 1000, 100, 30, 10, 3), 1) // 30
     order.addItem(new Item(5, "Instrumentos Musicais", "Amplificador", 5000, 100, 50, 50, 20), 1)
     order.addItem(new Item(6, "Acessórios", "Cabo", 30, 10, 10, 10, 0.9), 3)
