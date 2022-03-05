@@ -4,7 +4,8 @@
   "description": "clean code & clean architecture",
   "main": "index.js",
   "scripts": {
-    "test": "tsc && jest ./dist --runInBand"
+    "test": "tsc && jest ./dist --runInBand",
+    "coverage": "tsc && jest ./dist --runInBand --coverage"
   },
   "repository": {
     "type": "git",
