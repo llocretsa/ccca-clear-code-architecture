@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "tsc && jest ./dist --runInBand --passWithNoTests --no-cache --forceExit",
-    "coverage": "tsc && jest ./dist --runInBand --coverage"
+    "coverage": "tsc && jest ./dist --runInBand --coverage",
+    "main": "tsc && node ./dist/src/main"
   },
   "repository": {
     "type": "git",
