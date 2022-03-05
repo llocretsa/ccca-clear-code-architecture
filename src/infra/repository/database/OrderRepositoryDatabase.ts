@@ -1,3 +1,6 @@
+import Coupon from '../../../domain/entity/Coupon'
+import DefaultFreightCalculator from '../../../domain/entity/DefaultFreightCalculator'
+import Item from '../../../domain/entity/Item'
 import Order from '../../../domain/entity/Order'
 import OrderRepository from '../../../domain/repository/OrderRepository'
 import Connection from '../../database/Connection'
@@ -27,6 +30,42 @@ export default class OrderRepositoryDatabase implements OrderRepository {
           orderItem.quantity
         ])
     }
+  }
+
+  async get(code: string): Promise<Order> {
+    const [orderData] = await this.connection.query('select * from ccca.order where code = $1', [code])
+    if (!orderData) throw new Error('Order nor found')
+    const order = new Order(
+      orderData.cpf,
+      orderData.issue_date,
+      new DefaultFreightCalculator(),
+      orderData.sequence
+    )
+    const orderItemsData = await this.connection.query('select * from ccca.order_item where id_order = $1', [
+      orderData.id_order
+    ])
+    for (const orderItemData of orderItemsData) {
+      const [itemData] = await this.connection.query('select * from ccca.item where id_item = $1', [
+        orderItemData.id_item
+      ])
+      const item = new Item(
+        itemData.id_item,
+        itemData.category,
+        itemData.description,
+        parseFloat(orderItemData.price),
+        itemData.width,
+        itemData.height,
+        itemData.length,
+        itemData.weight
+      )
+      order.addItem(item, orderItemData.quantity)
+    }
+    if (orderData.coupon) {
+      const [couponData] = await this.connection.query('select * from ccca.coupon where code = $1', [orderData.coupon])
+      const coupon = new Coupon(couponData.code, couponData.percentage, couponData.expire_date)
+      order.addCoupon(coupon)
+    }
+    return order
   }
 
   async count(): Promise<number> {
