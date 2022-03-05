@@ -1,3 +1,4 @@
+import DefaultFreightCalculator from '../../domain/entity/DefaultFreightCalculator'
 import Order from '../../domain/entity/Order'
 import CouponRepository from '../../domain/repository/CouponRepository'
 import ItemRepository from '../../domain/repository/ItemRepository'
@@ -13,7 +14,8 @@ export default class PlaceOrder {
   ) { }
 
   async execute(input: PlaceOrderInput): Promise<PlaceOrderOutput> {
-    const order = new Order(input.cpf, input.date)
+    const sequence = await this.orderRepository.count() + 1
+    const order = new Order(input.cpf, input.date, new DefaultFreightCalculator(), sequence)
     for (const orderItem of input.orderItems) {
       const item = await this.itemRepository.findById(orderItem.idItem)
       if (!item) throw new Error('Item not found')
