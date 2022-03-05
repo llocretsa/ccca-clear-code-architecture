@@ -3,6 +3,7 @@ import Cpf from './Cpf'
 import DefaultFreightCalculator from './DefaultFreightCalculator'
 import FreightCalculator from './FreightCalculator'
 import Item from './Item'
+import OrderCode from './OrderCode'
 import OrderItem from './OrderItem'
 
 export default class Order {
@@ -10,7 +11,7 @@ export default class Order {
   private orderItems: OrderItem[]
   coupon: Coupon | undefined
   private freight: number
-  code: string
+  code: OrderCode
 
   constructor(
     cpf: string,
@@ -21,8 +22,7 @@ export default class Order {
     this.cpf = new Cpf(cpf)
     this.orderItems = []
     this.freight = 0
-    const year = date.getUTCFullYear()
-    this.code = `${year}${sequence.toString().padStart(8, '0')}`
+    this.code = new OrderCode(date, sequence)
   }
 
   addItem(item: Item, quantity: number) {
