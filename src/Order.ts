@@ -1,9 +1,9 @@
-import Coupon from './Coupon'
 import Cpf from './Cpf'
-import DefaultFreightCalculator from './DefaultFreightCalculator'
-import FreightCalculator from './FreightCalculator'
 import Item from './Item'
 import OrderItem from './OrderItem'
+import Coupon from './Coupon'
+import FreightCalculator from './FreightCalculator'
+import DefaultFreightCalculator from './DefaultFreightCalculator'
 
 export default class Order {
   cpf: Cpf
@@ -22,7 +22,7 @@ export default class Order {
   }
 
   addItem(item: Item, quantity: number) {
-    this.freight += FreightCalculator.calculate(item) * quantity
+    this.freight += this.freightCalculator.calculate(item) * quantity
     this.orderItems.push(new OrderItem(item.idItem, item.price, quantity))
   }
 
