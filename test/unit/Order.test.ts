@@ -1,8 +1,8 @@
-import Coupon from '../src/Coupon'
-import DefaultFreightCalculator from '../src/DefaultFreightCalculator'
-import FixedFreightCalculator from '../src/FixedFreightCalculator'
-import Item from '../src/Item'
-import Order from '../src/Order'
+import Coupon from '../../src/domain/entity/Coupon'
+import DefaultFreightCalculator from '../../src/domain/entity/DefaultFreightCalculator'
+import FixedFreightCalculator from '../../src/domain/entity/FixedFreightCalculator'
+import Item from '../../src/domain/entity/Item'
+import Order from '../../src/domain/entity/Order'
 
 describe('Criar Ordem de Compra', () => {
   test('Deve criar um pedido vazio com CPF válido', function () {
@@ -52,9 +52,9 @@ describe('Criar Ordem de Compra', () => {
   test('Deve criar um pedido com 3 itens com cálculo do frete com a estratégia default', function () {
     const cpf = '839.435.452-10'
     const order = new Order(cpf, new Date(), new DefaultFreightCalculator())
-    order.addItem(new Item(4, "Instrumentos Musicais", "Guitarra", 1000, 100, 30, 10, 3), 1) // 30
-    order.addItem(new Item(5, "Instrumentos Musicais", "Amplificador", 5000, 100, 50, 50, 20), 1)
-    order.addItem(new Item(6, "Acessórios", "Cabo", 30, 10, 10, 10, 0.9), 3)
+    order.addItem(new Item(4, 'Instrumentos Musicais', 'Guitarra', 1000, 100, 30, 10, 3), 1) // 30
+    order.addItem(new Item(5, 'Instrumentos Musicais', 'Amplificador', 5000, 100, 50, 50, 20), 1)
+    order.addItem(new Item(6, 'Acessórios', 'Cabo', 30, 10, 10, 10, 0.9), 3)
     const freight = order.getFreight()
     expect(freight).toBe(260)
   })
@@ -62,9 +62,9 @@ describe('Criar Ordem de Compra', () => {
   test('Deve criar um pedido com 3 itens com cálculo do frete com a estratégia fixo', function () {
     const cpf = '839.435.452-10'
     const order = new Order(cpf, new Date(), new FixedFreightCalculator())
-    order.addItem(new Item(4, "Instrumentos Musicais", "Guitarra", 1000, 100, 30, 10, 3), 1) // 30
-    order.addItem(new Item(5, "Instrumentos Musicais", "Amplificador", 5000, 100, 50, 50, 20), 1)
-    order.addItem(new Item(6, "Acessórios", "Cabo", 30, 10, 10, 10, 0.9), 3)
+    order.addItem(new Item(4, 'Instrumentos Musicais', 'Guitarra', 1000, 100, 30, 10, 3), 1) // 30
+    order.addItem(new Item(5, 'Instrumentos Musicais', 'Amplificador', 5000, 100, 50, 50, 20), 1)
+    order.addItem(new Item(6, 'Acessórios', 'Cabo', 30, 10, 10, 10, 0.9), 3)
     const freight = order.getFreight()
     expect(freight).toBe(50)
   })

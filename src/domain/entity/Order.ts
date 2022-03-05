@@ -1,9 +1,9 @@
+import Coupon from './Coupon'
 import Cpf from './Cpf'
+import DefaultFreightCalculator from './DefaultFreightCalculator'
+import FreightCalculator from './FreightCalculator'
 import Item from './Item'
 import OrderItem from './OrderItem'
-import Coupon from './Coupon'
-import FreightCalculator from './FreightCalculator'
-import DefaultFreightCalculator from './DefaultFreightCalculator'
 
 export default class Order {
   cpf: Cpf
