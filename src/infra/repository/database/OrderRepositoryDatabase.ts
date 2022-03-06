@@ -68,6 +68,16 @@ export default class OrderRepositoryDatabase implements OrderRepository {
     return order
   }
 
+  async findAll(): Promise<Order[]> {
+    const orders: Order[] = []
+    const ordersData = await this.connection.query('select * from ccca.order', [])
+    for (const orderData of ordersData) {
+      const order = await this.get(orderData.code)
+      orders.push(order)
+    }
+    return orders
+  }
+
   async count(): Promise<number> {
     const [orderData] = await this.connection.query('select count(*)::int as count from ccca.order', [])
     return orderData.count

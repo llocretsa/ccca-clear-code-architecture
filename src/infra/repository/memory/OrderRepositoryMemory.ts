@@ -19,6 +19,10 @@ export default class OrderRepositoryMemory implements OrderRepository {
     return order
   }
 
+  async findAll(): Promise<Order[]> {
+    return this.orders
+  }
+
   count(): Promise<number> {
     return Promise.resolve(this.orders.length)
   }
