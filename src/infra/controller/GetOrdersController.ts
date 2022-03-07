@@ -1,14 +1,14 @@
-import GetOrders from '../../application/useCase/get_orders/GetOrders'
-import RepositoryFactory from '../../domain/factory/RepositoryFactory'
+import GetOrders from '../../application/query/get_orders/GetOrders'
+import Connection from '../database/Connection'
 
 export default class GetOrdersController {
 
   constructor(
-    readonly repositoryFactory: RepositoryFactory
+    readonly connetion: Connection
   ) { }
 
   async execute(params: any, body: any) {
-    const getOrders = new GetOrders(this.repositoryFactory)
+    const getOrders = new GetOrders(this.connetion)
     const getOrdersOutput = await getOrders.execute()
     return getOrdersOutput
   }

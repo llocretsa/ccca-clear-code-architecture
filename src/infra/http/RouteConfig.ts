@@ -28,7 +28,7 @@ export default class RouteConfig {
     })
 
     http.on('/orders', 'get', async (params: any, body: any) => {
-      const getOrdersController = new GetOrdersController(repositoryFactory)
+      const getOrdersController = new GetOrdersController(connection)
       return getOrdersController.execute(params, body)
     })
 
