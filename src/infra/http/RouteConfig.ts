@@ -4,12 +4,17 @@ import RepositoryFactory from '../../domain/factory/RepositoryFactory'
 import GetOrderController from '../controller/GetOrderController'
 import GetOrdersController from '../controller/GetOrdersController'
 import PlaceOrderController from '../controller/PlaceOrderController'
+import Connection from '../database/Connection'
 import PgPromiseConnectionAdapter from '../database/PgPromiseConnectionAdapter'
 import ItemRepositoryDatabase from '../repository/database/ItemRepositoryDatabase'
 import Http from './Http'
 
 export default class RouteConfig {
-  constructor(http: Http, repositoryFactory: RepositoryFactory) {
+  constructor(
+    http: Http,
+    repositoryFactory: RepositoryFactory,
+    connection: Connection
+  ) {
 
     http.on('/orders', 'post', async (params: any, body: any) => {
       const placeOrderController = new PlaceOrderController(repositoryFactory)
@@ -28,7 +33,7 @@ export default class RouteConfig {
     })
 
     http.on('/orders/:code', 'get', async (params: any, body: any) => {
-      const getOrderController = new GetOrderController(repositoryFactory)
+      const getOrderController = new GetOrderController(connection)
       return getOrderController.execute(params, body)
     })
   }
