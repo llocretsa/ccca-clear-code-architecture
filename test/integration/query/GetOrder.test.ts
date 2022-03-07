@@ -1,5 +1,6 @@
 import GetOrder from '../../../src/application/query/get_order/GetOrder'
 import PlaceOrder from '../../../src/application/useCase/place_order/PlaceOrder'
+import OrderDAODatabase from '../../../src/infra/dao/OrderDAODatabase'
 import PgPromiseConnectionAdapter from '../../../src/infra/database/PgPromiseConnectionAdapter'
 import DatabaseRepositoryFactory from '../../../src/infra/factory/DatabaseRepositoryFactory'
 import OrderRepositoryDatabase from '../../../src/infra/repository/database/OrderRepositoryDatabase'
@@ -12,8 +13,9 @@ describe('Fazer Pedido', () => {
     const connection = PgPromiseConnectionAdapter.getInstance()
     orderRepository = new OrderRepositoryDatabase(connection)
     const repositoryFactory = new DatabaseRepositoryFactory()
+    const orderDAO = new OrderDAODatabase(connection)
     placeOrder = new PlaceOrder(repositoryFactory)
-    getOrder = new GetOrder(connection)
+    getOrder = new GetOrder(orderDAO)
   })
 
   test('Deve obter um pedido pelo código', async () => {
