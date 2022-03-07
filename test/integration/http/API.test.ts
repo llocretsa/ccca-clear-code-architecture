@@ -1,8 +1,8 @@
 import axios from 'axios'
-import PlaceOrder from '../../src/application/useCase/place_order/PlaceOrder'
-import PgPromiseConnectionAdapter from '../../src/infra/database/PgPromiseConnectionAdapter'
-import DatabaseRepositoryFactory from '../../src/infra/factory/DatabaseRepositoryFactory'
-import OrderRepositoryDatabase from '../../src/infra/repository/database/OrderRepositoryDatabase'
+import PlaceOrder from '../../../src/application/useCase/place_order/PlaceOrder'
+import PgPromiseConnectionAdapter from '../../../src/infra/database/PgPromiseConnectionAdapter'
+import DatabaseRepositoryFactory from '../../../src/infra/factory/DatabaseRepositoryFactory'
+import OrderRepositoryDatabase from '../../../src/infra/repository/database/OrderRepositoryDatabase'
 
 describe('API', () => {
   let placeOrders: PlaceOrder

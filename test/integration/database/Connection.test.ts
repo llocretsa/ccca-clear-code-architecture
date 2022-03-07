@@ -1,4 +1,4 @@
-import PgPromiseConnectionAdapter from '../../src/infra/database/PgPromiseConnectionAdapter'
+import PgPromiseConnectionAdapter from '../../../src/infra/database/PgPromiseConnectionAdapter'
 
 describe('Conexão com o Banco de Dados', () => {
   test('Deve criar uma conexão com o banco de dados', async () => {

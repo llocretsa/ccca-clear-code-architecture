@@ -1,8 +1,8 @@
-import SimulateFreight from '../../src/application/useCase/simulate_freight/SimulateFreight'
-import SimulateFreightInput from '../../src/application/useCase/simulate_freight/SimulateFreightInput'
-import DefaultFreightCalculator from '../../src/domain/entity/DefaultFreightCalculator'
-import PgPromiseConnectionAdapter from '../../src/infra/database/PgPromiseConnectionAdapter'
-import ItemRepositoryDatabase from '../../src/infra/repository/database/ItemRepositoryDatabase'
+import SimulateFreight from '../../../src/application/useCase/simulate_freight/SimulateFreight'
+import SimulateFreightInput from '../../../src/application/useCase/simulate_freight/SimulateFreightInput'
+import DefaultFreightCalculator from '../../../src/domain/entity/DefaultFreightCalculator'
+import PgPromiseConnectionAdapter from '../../../src/infra/database/PgPromiseConnectionAdapter'
+import ItemRepositoryDatabase from '../../../src/infra/repository/database/ItemRepositoryDatabase'
 
 describe('Simular Frete', () => {
   //

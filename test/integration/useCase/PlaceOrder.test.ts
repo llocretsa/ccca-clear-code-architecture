@@ -1,7 +1,7 @@
-import PlaceOrder from '../../src/application/useCase/place_order/PlaceOrder'
-import PgPromiseConnectionAdapter from '../../src/infra/database/PgPromiseConnectionAdapter'
-import DatabaseRepositoryFactory from '../../src/infra/factory/DatabaseRepositoryFactory'
-import OrderRepositoryDatabase from '../../src/infra/repository/database/OrderRepositoryDatabase'
+import PlaceOrder from '../../../src/application/useCase/place_order/PlaceOrder'
+import PgPromiseConnectionAdapter from '../../../src/infra/database/PgPromiseConnectionAdapter'
+import DatabaseRepositoryFactory from '../../../src/infra/factory/DatabaseRepositoryFactory'
+import OrderRepositoryDatabase from '../../../src/infra/repository/database/OrderRepositoryDatabase'
 
 describe('Fazer Pedido', () => {
   let placeOrder: PlaceOrder
@@ -10,7 +10,6 @@ describe('Fazer Pedido', () => {
     const connection = PgPromiseConnectionAdapter.getInstance()
     orderRepository = new OrderRepositoryDatabase(connection)
     const repositoryFactory = new DatabaseRepositoryFactory()
-    // const repositoryFactory = new MemoryRepositoryFactory()
     placeOrder = new PlaceOrder(repositoryFactory)
   })
 

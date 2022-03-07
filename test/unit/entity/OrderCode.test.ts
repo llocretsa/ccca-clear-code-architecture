@@ -1,4 +1,4 @@
-import OrderCode from '../../src/domain/entity/OrderCode'
+import OrderCode from '../../../src/domain/entity/OrderCode'
 
 describe('Código de Pedigo', () => {
   test('Deve cria um código de pedido', () => {
