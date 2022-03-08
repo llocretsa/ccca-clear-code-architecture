@@ -1,20 +1,28 @@
+import GetStock from '../../../src/application/useCase/get_strock/GetStock'
 import PlaceOrder from '../../../src/application/useCase/place_order/PlaceOrder'
 import PgPromiseConnectionAdapter from '../../../src/infra/database/PgPromiseConnectionAdapter'
 import DatabaseRepositoryFactory from '../../../src/infra/factory/DatabaseRepositoryFactory'
 import OrderRepositoryDatabase from '../../../src/infra/repository/database/OrderRepositoryDatabase'
+import StockEntryRepositoryDatabase from '../../../src/infra/repository/database/StockEntryRepositoryDatabase'
 
 describe('Fazer Pedido', () => {
   let placeOrder: PlaceOrder
+  let getStock: GetStock
   let orderRepository: OrderRepositoryDatabase
+  let stockEntryRepository: StockEntryRepositoryDatabase
+
   beforeEach(() => {
     const connection = PgPromiseConnectionAdapter.getInstance()
     orderRepository = new OrderRepositoryDatabase(connection)
+    stockEntryRepository = new StockEntryRepositoryDatabase(connection)
     const repositoryFactory = new DatabaseRepositoryFactory()
     placeOrder = new PlaceOrder(repositoryFactory)
+    getStock = new GetStock(repositoryFactory)
   })
 
   afterEach(async () => {
     await orderRepository.clear()
+    await stockEntryRepository.clear()
   })
 
   test('Deve fazer um pedido', async () => {
@@ -58,5 +66,24 @@ describe('Fazer Pedido', () => {
     }
     const output = await placeOrder.execute(input)
     expect(output.code).toBe('202200000001')
+  })
+
+  test('Deve fazer um pedido e retirar do estoque', async () => {
+    const input = {
+      cpf: '839.435.452-10',
+      orderItems: [
+        { idItem: 4, quantity: 1 },
+        { idItem: 5, quantity: 1 },
+        { idItem: 6, quantity: 3 }
+      ],
+      date: new Date('2022-03-02')
+    }
+    await placeOrder.execute(input)
+    const totala = await getStock.execute(4)
+    const totalb = await getStock.execute(5)
+    const totalc = await getStock.execute(6)
+    expect(totala).toBe(-1)
+    expect(totalb).toBe(-1)
+    expect(totalc).toBe(-3)
   })
 })
