@@ -1,5 +1,6 @@
 import DefaultFreightCalculator from '../../../domain/entity/DefaultFreightCalculator'
 import Order from '../../../domain/entity/Order'
+import StockEntry from '../../../domain/entity/StockEntry'
 import RepositoryFactory from '../../../domain/factory/RepositoryFactory'
 import CouponRepository from '../../../domain/repository/CouponRepository'
 import ItemRepository from '../../../domain/repository/ItemRepository'
@@ -18,6 +19,7 @@ export default class PlaceOrder {
     this.itemRepository = repositoryFactory.createItemRepository()
     this.couponRepository = repositoryFactory.createCouponRepository()
     this.orderRepository = repositoryFactory.createOrderRepository()
+    // this.stockEntryRepository = repositoryFactory.createEntryRepository()
   }
 
   async execute(input: PlaceOrderInput): Promise<PlaceOrderOutput> {
@@ -33,6 +35,11 @@ export default class PlaceOrder {
       if (coupon) order.addCoupon(coupon)
     }
     await this.orderRepository.save(order)
+
+    // for (const orderItem of input.orderItems) {
+    //   this.stockEntryRepository.save(new StockEntry(orderItem.idItem, 'out', orderItem.quantity, orderItem.date))
+    // }
+
     const total = order.getTotal()
     const output = new PlaceOrderOutput(order.getCode(), total)
     return output

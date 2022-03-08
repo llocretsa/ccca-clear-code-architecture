@@ -47,3 +47,22 @@ create table ccca.order_item (
 	quantity integer,
 	primary key (id_order, id_item)
 );
+
+create table ccca.stock_entry (
+	id_stock_entry serial,
+	id_item integer,
+	operation text,
+	quantity integer,
+	date timestamp,
+	primary key (id_stock_entry)
+);
+
+insert into ccca.stock_entry (id_stock_entry, id_item, operation, quantity, date) values (547, 1, 'out', 1, '2020-03-07T10:00:00');
+insert into ccca.stock_entry (id_stock_entry, id_item, operation, quantity, date) values (548, 3, 'out', 3, '2020-03-07T10:00:00');
+insert into ccca.stock_entry (id_stock_entry, id_item, operation, quantity, date) values (549, 2, 'out', 1, '2020-03-07T10:00:00');
+insert into ccca.stock_entry (id_stock_entry, id_item, operation, quantity, date) values (550, 5, 'out', 1, '2020-03-07T10:00:00');
+insert into ccca.stock_entry (id_stock_entry, id_item, operation, quantity, date) values (551, 6, 'out', 3, '2020-03-07T10:00:00');
+insert into ccca.stock_entry (id_stock_entry, id_item, operation, quantity, date) values (552, 4, 'out', 1, '2020-03-07T10:00:00');
+insert into ccca.stock_entry (id_stock_entry, id_item, operation, quantity, date) values (553, 4, 'out', 1, '2020-03-07T10:00:00');
+insert into ccca.stock_entry (id_stock_entry, id_item, operation, quantity, date) values (554, 5, 'out', 1, '2020-03-07T10:00:00');
+insert into ccca.stock_entry (id_stock_entry, id_item, operation, quantity, date) values (555, 6, 'out', 3, '2020-03-07T10:00:00');
