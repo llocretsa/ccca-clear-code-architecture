@@ -1,5 +1,6 @@
 import GetOrders from '../../../src/application/query/get_orders/GetOrders'
 import PlaceOrder from '../../../src/application/useCase/place_order/PlaceOrder'
+import Broker from '../../../src/infra/broker/Broker'
 import OrderDAODatabase from '../../../src/infra/dao/OrderDAODatabase'
 import PgPromiseConnectionAdapter from '../../../src/infra/database/PgPromiseConnectionAdapter'
 import DatabaseRepositoryFactory from '../../../src/infra/factory/DatabaseRepositoryFactory'
@@ -14,7 +15,8 @@ describe('Fazer Pedidos', () => {
     ordersRepository = new OrderRepositoryDatabase(connection)
     const repositoryFactory = new DatabaseRepositoryFactory()
     const orderDAO = new OrderDAODatabase(connection)
-    placeOrders = new PlaceOrder(repositoryFactory)
+    const broker = new Broker()
+    placeOrders = new PlaceOrder(repositoryFactory, broker)
     getOrders = new GetOrders(orderDAO)
   })
 

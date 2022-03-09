@@ -1,3 +1,4 @@
+import Broker from './infra/broker/Broker'
 import OrderDAODatabase from './infra/dao/OrderDAODatabase'
 import PgPromiseConnectionAdapter from './infra/database/PgPromiseConnectionAdapter'
 import DatabaseRepositoryFactory from './infra/factory/DatabaseRepositoryFactory'
@@ -11,7 +12,8 @@ const expressAdapter = new ExpressAdapter()
 const connection = PgPromiseConnectionAdapter.getInstance()
 const orderDAO = new OrderDAODatabase(connection)
 const repositoryFactory = new DatabaseRepositoryFactory()
-new RouteConfig(expressAdapter, repositoryFactory, orderDAO)
+const broker = new Broker()
+new RouteConfig(expressAdapter, repositoryFactory, orderDAO, broker)
 
 expressAdapter.listen(PORT)
 console.log(`Aplicação iniciadda em: ${HOST}:${PORT}`)

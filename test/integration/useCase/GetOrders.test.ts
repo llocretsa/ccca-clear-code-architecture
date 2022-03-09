@@ -1,5 +1,6 @@
 import GetOrders from '../../../src/application/useCase/get_orders/GetOrders'
 import PlaceOrder from '../../../src/application/useCase/place_order/PlaceOrder'
+import Broker from '../../../src/infra/broker/Broker'
 import PgPromiseConnectionAdapter from '../../../src/infra/database/PgPromiseConnectionAdapter'
 import DatabaseRepositoryFactory from '../../../src/infra/factory/DatabaseRepositoryFactory'
 import OrderRepositoryDatabase from '../../../src/infra/repository/database/OrderRepositoryDatabase'
@@ -12,7 +13,8 @@ describe('Fazer Pedidos', () => {
     const connection = PgPromiseConnectionAdapter.getInstance()
     ordersRepository = new OrderRepositoryDatabase(connection)
     const repositoryFactory = new DatabaseRepositoryFactory()
-    placeOrders = new PlaceOrder(repositoryFactory)
+    const broker = new Broker()
+    placeOrders = new PlaceOrder(repositoryFactory, broker)
     getOrders = new GetOrders(repositoryFactory)
   })
 

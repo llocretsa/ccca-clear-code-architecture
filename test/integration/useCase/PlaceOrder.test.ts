@@ -1,5 +1,7 @@
+import OrderPlacedStockHandler from '../../../src/application/handler/OrderPlacedStockHandler'
 import GetStock from '../../../src/application/useCase/get_strock/GetStock'
 import PlaceOrder from '../../../src/application/useCase/place_order/PlaceOrder'
+import Broker from '../../../src/infra/broker/Broker'
 import PgPromiseConnectionAdapter from '../../../src/infra/database/PgPromiseConnectionAdapter'
 import DatabaseRepositoryFactory from '../../../src/infra/factory/DatabaseRepositoryFactory'
 import OrderRepositoryDatabase from '../../../src/infra/repository/database/OrderRepositoryDatabase'
@@ -16,7 +18,9 @@ describe('Fazer Pedido', () => {
     orderRepository = new OrderRepositoryDatabase(connection)
     stockEntryRepository = new StockEntryRepositoryDatabase(connection)
     const repositoryFactory = new DatabaseRepositoryFactory()
-    placeOrder = new PlaceOrder(repositoryFactory)
+    const broker = new Broker()
+    broker.register(new OrderPlacedStockHandler(repositoryFactory))
+    placeOrder = new PlaceOrder(repositoryFactory, broker)
     getStock = new GetStock(repositoryFactory)
   })
 
